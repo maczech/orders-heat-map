@@ -40,16 +40,49 @@ grails.project.dependency.resolution = {
         mavenLocal()
         grailsCentral()
         mavenCentral()
-        // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
+		mavenRepo("http://bin.hotels.com/artifactory/libs-release/") {
+			auth([
+				username: 'readonly',
+				password: '\\{DESede\\}CFUTXBvK0gmItVG/gst/7g=='
+			])
+		}
+		mavenRepo "http://repo.springsource.org/libs-release-remote/"
+/*		<exclusions>
+		<exclusion>
+		<groupId>hcom.foundation</groupId>
+			<artifactId>core-bundle</artifactId>
+		</exclusion>
+		<exclusion>
+			<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang</artifactId>
+		</exclusion>
+		<exclusion>
+		<groupId>org.apache</groupId>
+			<artifactId>commons-lang</artifactId>
+		</exclusion>
+		<exclusion>
+			<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		</exclusion>
+		</exclusions>
+
+ */       // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
+//        mavenRepo "http://repository.codehaus.org"
+        mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
+	
+	credentials {
+		username = "readonly"
+		password = "\\{DESede\\}CFUTXBvK0gmItVG/gst/7g=="
+	}
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         // runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+		runtime('hcom.modules:hermes-hotel-search-api:61.8') {excludes([name:'core-bundle'],[name:'commons-lang'],[group:'org.springframework'])}
+		runtime('hcom.modules:hermes-hotel-search-service:60.9') {excludes([name:'core-bundle'],[group:'org.springframework'])}
     }
 
     plugins {
@@ -65,7 +98,7 @@ grails.project.dependency.resolution = {
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.0.2"
         runtime ":resources:1.2.7"
-		
+		runtime ":rest:0.7"
 		runtime ':elasticsearch:0.0.3.1'
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0.1"

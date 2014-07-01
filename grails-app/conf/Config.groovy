@@ -120,5 +120,7 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
-elasticSearch.client.mode='local'
+elasticSearch.client.mode='transport'
+/*elasticSearch.client.hosts = [
+	[host:'localhost', port:9200]]*/
 elasticSearch.datastoreImpl='hibernateDatastore'

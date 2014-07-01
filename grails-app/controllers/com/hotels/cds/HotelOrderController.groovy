@@ -105,6 +105,35 @@ class HotelOrderController {
 		
 	}
 	
+	def getHotelsByGeoRange() {
+		def top =params.top
+		def left = params.left
+		def bottom = params.bottom
+		def right = params.right
+		
+		def hotelsPoints = hotelOrderService.getHotelsByGeoRange(top,left,bottom,right)
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", request.getHeader("Access-Control-Request-Methods"));
+		response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
+		response.setHeader("Access-Control-Max-Age", "86400");
+		render(contentType:"text/json") {
+			hotelsPoints
+		}
+		
+	}
+	
+	def getHotelDetails() {
+		def hotelId = params.hotelId
+		def hotelsPoint = hotelOrderService.getHotelDetails(hotelId)
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", request.getHeader("Access-Control-Request-Methods"));
+		response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
+		response.setHeader("Access-Control-Max-Age", "86400");
+		render(contentType:"text/json") {
+			hotelsPoint
+		}
+	}
+	
     protected void notFound() {
         request.withFormat {
             form multipartForm {
